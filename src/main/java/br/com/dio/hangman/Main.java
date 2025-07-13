@@ -8,13 +8,32 @@ import java.util.stream.Stream;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String... args) {
         var characters = Stream.of(args)
                 .map(a -> a.toLowerCase().charAt(0))
                 .map(HangmanChar::new).toList();
 
         System.out.println(characters);
-        System.out.println(new HangmanGame(characters));
+        var hangmanGame = new HangmanGame(characters);
+        System.out.println(hangmanGame);
+        hangmanGame.inputCharacter('t');
+        hangmanGame.inputCharacter('t');
+        System.out.println(hangmanGame);
+        hangmanGame.inputCharacter('b');
+        System.out.println(hangmanGame);
+        hangmanGame.inputCharacter('v');
+        System.out.println(hangmanGame);
+        hangmanGame.inputCharacter('d');
+        System.out.println(hangmanGame);
+        hangmanGame.inputCharacter('f');
+        System.out.println(hangmanGame);
+        hangmanGame.inputCharacter('g');
+        System.out.println(hangmanGame);
+        hangmanGame.inputCharacter('h');
+        System.out.println(hangmanGame);
+        hangmanGame.inputCharacter('i');
+
+
 
     }
 }
