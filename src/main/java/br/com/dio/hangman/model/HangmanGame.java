@@ -37,6 +37,10 @@ public class HangmanGame {
         this.hangmanInitialSize = hangman.length();
     }
 
+    public HangmanGamesStatus getStatus() {
+        return status;
+    }
+
     public void inputCharacter(final char character) {
         if (this.status != PENDING) {
             var message = this.status == WIN ?
@@ -44,26 +48,26 @@ public class HangmanGame {
                     "Você perdeu, tente novamente";
             throw new GameIsFinishedException(message);
         }
-
-
+        //letras erradas
+        if(this.failAttemps.contains(character)){
+            throw new LetterAlreadyInputedException("A letra '"+ character + "' já foi informada anteriormente!");
+        }
+        //letras corretas
         var found = this.characters.stream()
                 .filter(c -> c.getCharacter() == character)
                 .toList();
 
-        if(this.failAttemps.contains(character)){
-            throw new LetterAlreadyInputedException("A letra '"+ character + "' já foi informada anteriormente!");
-        }
 
         if(found.isEmpty()){
             failAttemps.add(character);
             if(failAttemps.size() >=7){
                 this.status = LOSE;
             }
-
             rebuildHangman(this.hangmanPaths.removeFirst());
             return;
         }
-        if(found.getFirst().isInvisible()){
+
+        if(found.stream().allMatch(HangmanChar::isVisible)){
             throw new LetterAlreadyInputedException("A letra '"+ character + "' já foi informada anteriormente!");
         }
 
